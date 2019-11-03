@@ -32,6 +32,9 @@ public class Test {
     private static HashMap<Integer, String> index2DpName = new HashMap<>();
     private static int introductionLineLength = 100;
 
+    /**
+     * 进行测试的外部接口
+     */
     public static void test() {
         try{
             init();
@@ -41,6 +44,9 @@ public class Test {
         }
     }
 
+    /**
+     * 打印进行测试的设计模式的介绍
+     */
     private static void printIntroduction() {
         StringBuilder introductionBuilder = new StringBuilder();
         introductionBuilder.append("*".repeat(introductionLineLength));
@@ -58,6 +64,9 @@ public class Test {
         System.out.println(introductionBuilder.toString());
     }
 
+    /**
+     * 内部方法，开始进行测试
+     */
     private static void startTest(){
         System.out.println("开始测试迪士尼乐园设计模式。输入q退出。");
         while(true){
@@ -113,6 +122,11 @@ public class Test {
         }
     }
 
+    /**
+     * 建立介绍的一行，包括设计模式名，以及对应的几种实现。
+     * @param builder
+     * @param dpDemoWithAuthors
+     */
     private static void buildIntroductionLine(StringBuilder builder, ArrayList<DPDemoWithAuthor> dpDemoWithAuthors) {
         builder.append("*");
         StringBuilder innerLineBuilder = new StringBuilder("模式"
@@ -132,6 +146,11 @@ public class Test {
         builder.append(innerLineBuilder);
     }
 
+    /**
+     * 内部包扫描器，用于外部包扫描的方法。
+     * @param curFile
+     * @param packName
+     */
     private static void packetScanner(File curFile, String packName){
         if (!curFile.isDirectory()) {
             return;
@@ -155,7 +174,10 @@ public class Test {
         }
     }
 
-
+    /**
+     * 进行包扫描的外部方法。
+     * @param packetName
+     */
     private static void scanPacket(String packetName) {
         String packetPath = packetName.replace(".", "/");
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -180,6 +202,10 @@ public class Test {
         }
     }
 
+    /**
+     * 初始化方法。
+     * @throws Exception
+     */
     private static void init() throws Exception{
         scanPacket("tongji");
         for (int i = 0; i < allClasses.size(); i++) {
@@ -229,19 +255,22 @@ public class Test {
 //        });
     }
 
+    /**
+     * 内部类，封装了作者名，实现的设计模式名，以及真正使用到的Demo类。
+     */
     static class DPDemoWithAuthor{
         private String authorShortName;
         private String dpName;
         private Class<?> demoClass;
 
 
-        public DPDemoWithAuthor(String authorName, String dpName, Class<?> demoClass) {
+        DPDemoWithAuthor(String authorName, String dpName, Class<?> demoClass) {
             this.authorShortName = authorName;
             this.dpName = dpName;
             this.demoClass = demoClass;
         }
 
-        public void doTest() throws Exception{
+        void doTest() throws Exception{
             try{
                 Method m = demoClass.getMethod("test");
 
@@ -253,15 +282,15 @@ public class Test {
             }
         }
 
-        public String getDpName() {
+        String getDpName() {
             return dpName;
         }
 
-        public String getAuthorShortName() {
+        String getAuthorShortName() {
             return authorShortName;
         }
 
-        public String getAuthorName(){
+        String getAuthorName(){
             return shortName2RealName.get(authorShortName);
         }
     }
